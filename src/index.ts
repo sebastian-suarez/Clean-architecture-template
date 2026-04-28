@@ -1,17 +1,14 @@
 import process from "node:process";
-import { runCli } from "#presentation/cli/cli.js";
 import { compose } from "#src/composition.js";
 import { loadConfig } from "#src/config.js";
 
+// CLI composition root (§2.5). Loads config, calls compose(), dispatches
+// argv to a CLI runner. The template ships with no commands — add a
+// presentation/cli/ runner and pass the wired use cases in once you
+// have them.
 const config = loadConfig();
-const composed = compose(config);
+compose(config);
 
-const exitCode = await runCli(process.argv.slice(2), {
-	placeOrder: composed.placeOrder,
-	cancelOrder: composed.cancelOrder,
-	getOrder: composed.getOrder,
-	listOrders: composed.listOrders,
-	listOrderSummaries: composed.listOrderSummaries,
-});
-
-process.exit(exitCode);
+console.log("CLI composition root — no commands wired yet.");
+console.log(`(NODE_ENV=${config.nodeEnv})`);
+process.exit(0);
