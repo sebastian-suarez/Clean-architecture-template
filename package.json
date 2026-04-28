@@ -1,0 +1,65 @@
+{
+	"name": "clean-architecture-template",
+	"version": "0.1.0",
+	"description": "Clean Architecture template for Node.js with TypeScript, ESM, Vitest, XO, and Prettier. Layered structure (domain, application, infrastructure, presentation) ready to fork for new projects.",
+	"keywords": [
+		"clean-architecture",
+		"hexagonal",
+		"ports-and-adapters",
+		"DDD",
+		"TypeScript",
+		"template",
+		"Node.js",
+		"ESM",
+		"Vitest",
+		"XO",
+		"Prettier"
+	],
+	"homepage": "https://github.com/sebastian-suarez/Clean-architecture-template#readme",
+	"bugs": {
+		"url": "https://github.com/sebastian-suarez/Clean-architecture-template/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sebastian-suarez/Clean-architecture-template.git"
+	},
+	"license": "MIT",
+	"author": "Sebastian Suarez <261091557+sebastian-suarez@users.noreply.github.com> (https://www.sebastiansuarez.dev)",
+	"type": "module",
+	"imports": {
+		"#src/*": "./src/*",
+		"#domain/*": "./src/domain/*",
+		"#application/*": "./src/application/*",
+		"#infrastructure/*": "./src/infrastructure/*",
+		"#presentation/*": "./src/presentation/*",
+		"#tests/*": "./tests/*"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"scripts": {
+		"start": "tsx ./src/index.ts",
+		"serve": "tsx ./src/server.ts",
+		"worker": "tsx ./src/worker.ts",
+		"test": "vitest",
+		"lint": "xo --fix",
+		"format": "prettier --write .",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@tsconfig/node24": "^24.0.4",
+		"@types/node": "^25.6.0",
+		"dotenv": "^17.4.2",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.7",
+		"prettier": "3.8.1",
+		"tsx": "^4.21.0",
+		"typescript": "^5.9.3",
+		"vitest": "^4.1.4",
+		"xo": "^1.2.3"
+	},
+	"dependencies": {
+		"@hono/node-server": "^2.0.0",
+		"hono": "^4.12.15"
+	}
+}
