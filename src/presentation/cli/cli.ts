@@ -1,31 +1,16 @@
 import { type CancelOrderUseCase } from "#application/ports/input/cancel-order-use-case.js";
-import { type CreateUserUseCase } from "#application/ports/input/create-user-use-case.js";
-import { type DeactivateUserUseCase } from "#application/ports/input/deactivate-user-use-case.js";
 import { type GetOrderUseCase } from "#application/ports/input/get-order-use-case.js";
-import { type GetUserUseCase } from "#application/ports/input/get-user-use-case.js";
 import { type ListOrderSummariesUseCase } from "#application/ports/input/list-order-summaries-use-case.js";
 import { type ListOrdersUseCase } from "#application/ports/input/list-orders-use-case.js";
-import { type ListUsersUseCase } from "#application/ports/input/list-users-use-case.js";
 import { type PlaceOrderUseCase } from "#application/ports/input/place-order-use-case.js";
-import { type RenameUserUseCase } from "#application/ports/input/rename-user-use-case.js";
 import { DomainError } from "#domain/shared/domain-error.js";
 import { cancelOrderCommand } from "#presentation/cli/commands/cancel-order.js";
-import { createUserCommand } from "#presentation/cli/commands/create-user.js";
-import { deactivateUserCommand } from "#presentation/cli/commands/deactivate-user.js";
 import { getOrderCommand } from "#presentation/cli/commands/get-order.js";
-import { getUserCommand } from "#presentation/cli/commands/get-user.js";
 import { listOrderSummariesCommand } from "#presentation/cli/commands/list-order-summaries.js";
 import { listOrdersCommand } from "#presentation/cli/commands/list-orders.js";
-import { listUsersCommand } from "#presentation/cli/commands/list-users.js";
 import { placeOrderCommand } from "#presentation/cli/commands/place-order.js";
-import { renameUserCommand } from "#presentation/cli/commands/rename-user.js";
 
 export type CliDeps = {
-	createUser: CreateUserUseCase;
-	getUser: GetUserUseCase;
-	listUsers: ListUsersUseCase;
-	renameUser: RenameUserUseCase;
-	deactivateUser: DeactivateUserUseCase;
 	placeOrder: PlaceOrderUseCase;
 	cancelOrder: CancelOrderUseCase;
 	getOrder: GetOrderUseCase;
@@ -41,41 +26,6 @@ type CommandEntry = {
 };
 
 const commands = new Map<string, CommandEntry>([
-	[
-		"create-user",
-		{
-			describe: "Create a new user. Flags: --name, --email",
-			handler: createUserCommand,
-		},
-	],
-	[
-		"get-user",
-		{
-			describe: "Get a user by id. Usage: get-user <id>",
-			handler: getUserCommand,
-		},
-	],
-	[
-		"list-users",
-		{
-			describe: "List all users",
-			handler: listUsersCommand,
-		},
-	],
-	[
-		"rename-user",
-		{
-			describe: "Rename a user. Flags: --id, --name",
-			handler: renameUserCommand,
-		},
-	],
-	[
-		"deactivate-user",
-		{
-			describe: "Deactivate a user. Flags: --id, --reason",
-			handler: deactivateUserCommand,
-		},
-	],
 	[
 		"place-order",
 		{
@@ -149,6 +99,6 @@ function printHelp(): void {
 	console.log("Usage: <command> [options]\n");
 	console.log("Commands:");
 	for (const [name, { describe }] of commands) {
-		console.log(`  ${name.padEnd(18)} ${describe}`);
+		console.log(`  ${name.padEnd(20)} ${describe}`);
 	}
 }

@@ -7,9 +7,6 @@ const config = loadConfig();
 const composed = compose(config);
 
 const app = createServer({
-	createUser: composed.createUser,
-	getUser: composed.getUser,
-	listUsers: composed.listUsers,
 	placeOrder: composed.placeOrderForHttp,
 	cancelOrder: composed.cancelOrder,
 	getOrder: composed.getOrder,

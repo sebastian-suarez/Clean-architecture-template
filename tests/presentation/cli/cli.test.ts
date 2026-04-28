@@ -1,44 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { type UserDto } from "#application/dtos/user-dto.js";
-import { UserNotFoundError } from "#domain/user/errors.js";
+import { OrderNotFoundError } from "#domain/order/errors.js";
 import { type CliDeps, runCli } from "#presentation/cli/cli.js";
-
-const sampleDto: UserDto = {
-	id: "u-1",
-	name: "A",
-	email: "a@b.co",
-	status: "active",
-	createdAt: "2026-01-01T00:00:00.000Z",
-	version: 0,
-};
 
 function makeDeps(overrides: Partial<CliDeps> = {}): CliDeps {
 	return {
-		createUser: {
-			async execute() {
-				return sampleDto;
-			},
-		},
-		getUser: {
-			async execute() {
-				return sampleDto;
-			},
-		},
-		listUsers: {
-			async execute() {
-				return [];
-			},
-		},
-		renameUser: {
-			async execute() {
-				return sampleDto;
-			},
-		},
-		deactivateUser: {
-			async execute() {
-				return sampleDto;
-			},
-		},
 		placeOrder: { async execute() {} },
 		cancelOrder: {
 			async execute() {
@@ -82,7 +47,6 @@ describe("runCli", () => {
 		expect(code).toBe(0);
 		const printed = JSON.stringify(log.mock.calls);
 		expect(printed).toContain("Commands:");
-		expect(printed).toContain("create-user");
 		expect(printed).toContain("place-order");
 	});
 
@@ -96,24 +60,18 @@ describe("runCli", () => {
 
 	it("translates DomainError into '[code]: message' and returns 1", async () => {
 		const code = await runCli(
-			["get-user", "x"],
+			["get-order", "missing"],
 			makeDeps({
-				getUser: {
+				getOrder: {
 					async execute() {
-						throw new UserNotFoundError("x");
+						throw new OrderNotFoundError("missing");
 					},
 				},
 			}),
 		);
 		expect(code).toBe(1);
 		expect(error).toHaveBeenCalledWith(
-			expect.stringContaining("[USER_NOT_FOUND]"),
+			expect.stringContaining("[ORDER_NOT_FOUND]"),
 		);
-	});
-
-	it("returns 0 when the command succeeds", async () => {
-		const code = await runCli(["list-users"], makeDeps());
-		expect(code).toBe(0);
-		expect(log).toHaveBeenCalledWith("(no users)");
 	});
 });

@@ -7,11 +7,6 @@ const config = loadConfig();
 const composed = compose(config);
 
 const exitCode = await runCli(process.argv.slice(2), {
-	createUser: composed.createUser,
-	getUser: composed.getUser,
-	listUsers: composed.listUsers,
-	renameUser: composed.renameUser,
-	deactivateUser: composed.deactivateUser,
 	placeOrder: composed.placeOrder,
 	cancelOrder: composed.cancelOrder,
 	getOrder: composed.getOrder,
